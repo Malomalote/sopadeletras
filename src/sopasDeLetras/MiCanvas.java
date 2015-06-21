@@ -41,6 +41,7 @@ public class MiCanvas extends Canvas {
         this.vcc = vcc;
         todasLasImagenesAzules = new ArrayList<>();
         cargaTodasLasImagenes();
+        //creamos un primer tablero aleatorio para que nos muestre algo al empezar
         tamanoHorizontal = 10;
         tamanoVertical = 10;
         StringBuilder cadenaAleatoria = new StringBuilder();
@@ -48,9 +49,9 @@ public class MiCanvas extends Canvas {
             for (int j = 0; j < tamanoHorizontal; j++) {
                 int numero = Utilidades.dameUnNumeroEntre(0, 26);
                 if (numero == 26) {
-                    cadenaAleatoria.append('Ñ');
+                    cadenaAleatoria.append('ñ');
                 } else {
-                    cadenaAleatoria.append((char) (numero + 65));
+                    cadenaAleatoria.append((char) (numero + 97));
                 }
             }
         }
