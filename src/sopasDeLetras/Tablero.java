@@ -131,9 +131,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - tamanoPalabra);
         int y = Utilidades.dameUnNumeroEntre(tamanoPalabra - 1, alto - 1);
         String patron = getTramo(x, y, x + tamanoPalabra - 1, y - tamanoPalabra + 1);
-        System.out.println("intenta noreste");
+     /*   System.out.println("intenta noreste");
         System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));
+        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = miControlador.buscarPalabras(patron);
@@ -141,9 +141,11 @@ public class Tablero {
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
                 nuevaPalabra = listaCandidatos.get(Utilidades.dameUnNumeroEntre(0, listaCandidatos.size() - 1));
-                palabrasIncluidas.add(nuevaPalabra);
-                setTramoNoreste(x, y, nuevaPalabra);
-                exito = true;
+                if (!palabrasIncluidas.contains(nuevaPalabra)) {
+                    palabrasIncluidas.add(nuevaPalabra);
+                    setTramoNoreste(x, y, nuevaPalabra);
+                    exito = true;
+                }
             }
         }
         return exito;
@@ -157,9 +159,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - tamanoPalabra);
         int y = Utilidades.dameUnNumeroEntre(0, alto - 1);
         String patron = getTramo(x, y, x + tamanoPalabra - 1, y);
-        System.out.println("intenta este");
+      /*  System.out.println("intenta este");
         System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));
+        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = miControlador.buscarPalabras(patron);
@@ -167,9 +169,11 @@ public class Tablero {
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
                 nuevaPalabra = listaCandidatos.get(Utilidades.dameUnNumeroEntre(0, listaCandidatos.size() - 1));
-                palabrasIncluidas.add(nuevaPalabra);
-                setTramoEste(x, y, nuevaPalabra);
-                exito = true;
+                if (!palabrasIncluidas.contains(nuevaPalabra)) {
+                    palabrasIncluidas.add(nuevaPalabra);
+                    setTramoEste(x, y, nuevaPalabra);
+                    exito = true;
+                }
             }
         }
         return exito;
@@ -183,9 +187,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - tamanoPalabra);
         int y = Utilidades.dameUnNumeroEntre(0, alto - tamanoPalabra);
         String patron = getTramo(x, y, x + tamanoPalabra - 1, y + tamanoPalabra - 1);
-        System.out.println("intenta sureste");
+     /*   System.out.println("intenta sureste");
         System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));
+        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = miControlador.buscarPalabras(patron);
@@ -193,10 +197,12 @@ public class Tablero {
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
                 nuevaPalabra = listaCandidatos.get(Utilidades.dameUnNumeroEntre(0, listaCandidatos.size() - 1));
-                System.out.println(nuevaPalabra);
-                palabrasIncluidas.add(nuevaPalabra);
-                setTramoSureste(x, y, nuevaPalabra);
-                exito = true;
+              //  System.out.println(nuevaPalabra);
+                if (!palabrasIncluidas.contains(nuevaPalabra)) {
+                    palabrasIncluidas.add(nuevaPalabra);
+                    setTramoSureste(x, y, nuevaPalabra);
+                    exito = true;
+                }
             }
         }
         return exito;
@@ -210,9 +216,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - 1);
         int y = Utilidades.dameUnNumeroEntre(0, alto - tamanoPalabra);
         String patron = getTramo(x, y, x, y + tamanoPalabra - 1);
-        System.out.println("intenta sur");
+      /*  System.out.println("intenta sur");
         System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));
+        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = miControlador.buscarPalabras(patron);
@@ -220,9 +226,11 @@ public class Tablero {
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
                 nuevaPalabra = listaCandidatos.get(Utilidades.dameUnNumeroEntre(0, listaCandidatos.size() - 1));
-                palabrasIncluidas.add(nuevaPalabra);
-                setTramoSur(x, y, nuevaPalabra);
-                exito = true;
+                if (!palabrasIncluidas.contains(nuevaPalabra)) {
+                    palabrasIncluidas.add(nuevaPalabra);
+                    setTramoSur(x, y, nuevaPalabra);
+                    exito = true;
+                }
             }
         }
         return exito;
@@ -330,6 +338,5 @@ public class Tablero {
         }
         return cadenaTemporal.toString();
     }
-
 
 }

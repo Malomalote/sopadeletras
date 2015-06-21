@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pruebacanvas;
+package sopasDeLetras;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,7 +17,10 @@ public class VentanaConCanvas extends JFrame{
     private JLabel labelx,labely;
     private JButton boton1;
     MiCanvas unCanvas;
-    VentanaConCanvas(){
+    Controlador miControlador;
+    VentanaConCanvas(Controlador miControlador){
+        this.miControlador=miControlador;
+        
         iniciarControles();
     }
     private void iniciarControles(){

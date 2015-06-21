@@ -128,8 +128,8 @@ public class Diccionario {
         ArrayList<String> paraDevolver = new ArrayList<>();
         int tamano = patron.length();
         for (String cate : listadoCompleto.keySet()) {
-            System.out.println(patron);
-            System.out.println(cate);
+          /*  System.out.println(patron);
+            System.out.println(cate);*/
             if (listadoCompleto.get(cate).containsKey(tamano)) {
                 for (String pala : listadoCompleto.get(cate).get(tamano)) {
                     Pattern p = Pattern.compile(patron);
