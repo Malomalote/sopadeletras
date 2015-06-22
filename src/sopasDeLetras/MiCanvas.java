@@ -30,21 +30,27 @@ public class MiCanvas extends Canvas {
 
     private int yRaton;
     private String paraPoner;
+    private String paraMostrar;
+    
     private int tamanoHorizontal;
     private int tamanoVertical;
     private VentanaConCanvas vcc;
     private ArrayList<Image> todasLasImagenesAzules;
     private ArrayList<Image> todasLasImagenesRosas;
+    private Image fondoSeleccion;
+    
 
     MiCanvas(VentanaConCanvas vcc) {
         this.setBackground(Color.CYAN);
         this.vcc = vcc;
         todasLasImagenesAzules = new ArrayList<>();
+        todasLasImagenesRosas = new ArrayList<>();
         cargaTodasLasImagenes();
         //creamos un primer tablero aleatorio para que nos muestre algo al empezar
         tamanoHorizontal = 10;
         tamanoVertical = 10;
         StringBuilder cadenaAleatoria = new StringBuilder();
+        StringBuilder cadenaParaMostrar = new StringBuilder();
         for (int i = 0; i < tamanoHorizontal; i++) {
             for (int j = 0; j < tamanoHorizontal; j++) {
                 int numero = Utilidades.dameUnNumeroEntre(0, 26);
@@ -53,35 +59,21 @@ public class MiCanvas extends Canvas {
                 } else {
                     cadenaAleatoria.append((char) (numero + 97));
                 }
+                //aprovechamos para crear paraMostrar, que nos dirá en que color
+                //va la casilla
+                cadenaParaMostrar.append('a');
             }
         }
-         paraPoner=cadenaAleatoria.toString();
+        cadenaParaMostrar.setCharAt(20, 'r');
+        paraPoner = cadenaAleatoria.toString();
+        paraMostrar = cadenaParaMostrar.toString();
+        //fin creacion de tablero
         System.out.println(paraPoner);
     }
 
-    public void update(Graphics g) {
+     public void update(Graphics g) {
         paint(g);
-    }
-
-    /*  public void paint (Graphics g)
-     {
-     // Se crea una imagen del mismo tamaño que el Canvas
-     BufferedImage imagen = new BufferedImage (getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-
-     // Se dibuja en la imagen
-     imagen.getGraphics().drawImage(cargarImagen("recursos/aazul.png"), 0, 0, null);
-     imagen.getGraphics().drawImage(cargarImagen("recursos/bazul.png"), 128, 0, null);
-     for (int i=0;i<tamanoHorizontal;i++){
-     for (int j=0;j<tamanoVertical;j++){
-     String rutaImagen="recursos/" + paraPoner.charAt((i*tamanoVertical)+j) + "azul.png";
-     imagen.getGraphics().drawImage(cargarImagen(rutaImagen), i*50, j*50, null);
      }
-     }
-     // Se "pega" la imagen sobre el componente
-     g.drawImage(imagen, 0, 0, this);
-     vcc.setLabels(xRaton,yRaton);
-     }
-     */
     private Image cargarImagen(String archivo) {
         try {
             Image img1 = ImageIO.read(getClass().getClassLoader().getResource(archivo));
@@ -115,7 +107,7 @@ public class MiCanvas extends Canvas {
             todasLasImagenesAzules.add(cargarImagen(rutaImagen));
             rutaImagen = "recursos/" + (char) i + "rosa.png";
             System.out.println(rutaImagen);
-            // todasLasImagenesRosas.add(cargarImagen(rutaImagen));
+            todasLasImagenesRosas.add(cargarImagen(rutaImagen));
         }
         //rutaImagen="recursos/" + '\u00F1' + "azul.png";
         rutaImagen = "recursos/" + '1' + "azul.png";
@@ -123,7 +115,9 @@ public class MiCanvas extends Canvas {
         todasLasImagenesAzules.add(cargarImagen(rutaImagen));
         rutaImagen = "recursos/" + '1' + "rosa.png";
         System.out.println(rutaImagen);
-        //   todasLasImagenesRosas.add(cargarImagen(rutaImagen));
+           todasLasImagenesRosas.add(cargarImagen(rutaImagen));
+           fondoSeleccion=cargarImagen("recursos/fondoseleccion.png");
+        
     }
 
     @Override
@@ -137,18 +131,15 @@ public class MiCanvas extends Canvas {
             for (int j = 0; j < tamanoVertical; j++) {
 
                 caracter = (paraPoner.codePointAt((i * tamanoVertical) + j)) - 97;
-                if (caracter < 25) {
+                if (caracter > 26) {
+                    caracter = 26;
+                }
+                if (paraMostrar.codePointAt((i * tamanoVertical) + j) == 'a') {
                     miImagen = todasLasImagenesAzules.get(caracter);
                 } else {
-                    miImagen = todasLasImagenesAzules.get(26);
+                    miImagen = todasLasImagenesRosas.get(caracter);
                 }
-                /*
-                 if (caracter != 164 - 97) {
-                 miImagen = todasLasImagenesAzules.get(caracter);
-                 } else {
-                 miImagen = todasLasImagenesAzules.get(26);
-                 }
-                 */
+
                 imagen.getGraphics().drawImage(miImagen, j * 50, i * 50, null);
             }
         }
