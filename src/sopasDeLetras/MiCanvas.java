@@ -53,7 +53,7 @@ public class MiCanvas extends Canvas {
         StringBuilder cadenaParaMostrar = new StringBuilder();
         for (int i = 0; i < tamanoHorizontal; i++) {
             for (int j = 0; j < tamanoHorizontal; j++) {
-                int numero = Utilidades.dameUnNumeroEntre(0, 26);
+               int numero = Utilidades.dameUnNumeroEntre(0, 26);
                 if (numero == 26) {
                     cadenaAleatoria.append('ñ');
                 } else {
@@ -61,6 +61,7 @@ public class MiCanvas extends Canvas {
                 }
                 //aprovechamos para crear paraMostrar, que nos dirá en que color
                 //va la casilla
+                      
                 cadenaParaMostrar.append('a');
             }
         }
@@ -69,7 +70,6 @@ public class MiCanvas extends Canvas {
         paraMostrar = cadenaParaMostrar.toString();
         //fin creacion de tablero
         elegido = false;
-        System.out.println(paraPoner);
     }
 
     public void update(Graphics g) {
@@ -115,18 +115,13 @@ public class MiCanvas extends Canvas {
         String rutaImagen;
         for (int i = 97; i <= 122; i++) {
             rutaImagen = "recursos/" + (char) i + "azul.png";
-            System.out.println(rutaImagen);
             todasLasImagenesAzules.add(cargarImagen(rutaImagen));
             rutaImagen = "recursos/" + (char) i + "rosa.png";
-            System.out.println(rutaImagen);
             todasLasImagenesRosas.add(cargarImagen(rutaImagen));
         }
-        //rutaImagen="recursos/" + '\u00F1' + "azul.png";
         rutaImagen = "recursos/" + '1' + "azul.png";
-        // System.out.println(rutaImagen);
         todasLasImagenesAzules.add(cargarImagen(rutaImagen));
         rutaImagen = "recursos/" + '1' + "rosa.png";
-        System.out.println(rutaImagen);
         todasLasImagenesRosas.add(cargarImagen(rutaImagen));
         fondoSeleccion = cargarImagen("recursos/fondoseleccion.png");
 
@@ -158,13 +153,11 @@ public class MiCanvas extends Canvas {
         if (elegido) {
             miImagen = fondoSeleccion;
             imagen.getGraphics().drawImage(miImagen, xElegido, yElegido, null);
-            System.out.println(elegido);
         } else {
             g.clearRect(xElegido, yElegido, 50, 50);
         }
         // Se "pega" la imagen sobre el componente
         g.drawImage(imagen, 0, 0, this);
 
-        vcc.setLabels(xRaton, yRaton);
     }
 }

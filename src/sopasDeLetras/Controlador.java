@@ -33,7 +33,7 @@ public class Controlador {
         miTablero=new Tablero();
     }
     public void crearTablero(int ancho,int alto,int numeroDePalabras){
-        miTablero=new Tablero(ancho,alto,this);
+   //     miTablero=new Tablero(ancho,alto,this);
         miTablero.setNumeroDePalabras(numeroDePalabras);
     }
     public String getTablero(){

@@ -101,6 +101,7 @@ public class Diccionario {
     private void incluirPalabraEnDiccionario(String categoria, String palabraParaIncluir) {
 
         int tamano = palabraParaIncluir.length();
+       
         if (!listadoCompleto.containsKey(categoria)) {
             listadoCompleto.put(categoria, new TreeMap<Integer, ArrayList<String>>());
             listadoCompleto.get(categoria).put(tamano, new ArrayList<String>());
@@ -128,8 +129,8 @@ public class Diccionario {
         ArrayList<String> paraDevolver = new ArrayList<>();
         int tamano = patron.length();
         for (String cate : listadoCompleto.keySet()) {
-          /*  System.out.println(patron);
-            System.out.println(cate);*/
+            /*  System.out.println(patron);
+             System.out.println(cate);*/
             if (listadoCompleto.get(cate).containsKey(tamano)) {
                 for (String pala : listadoCompleto.get(cate).get(tamano)) {
                     Pattern p = Pattern.compile(patron);
@@ -159,6 +160,19 @@ public class Diccionario {
             if (m.find()) {
                 paraDevolver.add(pala);
             }
+        }
+        return paraDevolver;
+    }
+
+    /**
+     * Devuelve un array con las categorias que se incluyen en el diccionario
+     *
+     * @return listado de categorias
+     */
+    public ArrayList<String> getCategorias() {
+        ArrayList<String> paraDevolver = new ArrayList<>();
+        for (String cate : listadoCompleto.keySet()) {
+            paraDevolver.add(cate);
         }
         return paraDevolver;
     }

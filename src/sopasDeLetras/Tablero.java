@@ -21,7 +21,7 @@ public class Tablero {
     private char[][] contenido;
     ArrayList<String> palabrasIncluidas;
     private int numeroDePalabras;
-    private Controlador miControlador;
+    private VentanaConCanvas vcc;
 
     /**
      * Establece el número de palabras que compondrá la sopa de letras una vez
@@ -51,7 +51,7 @@ public class Tablero {
      * @param ancho
      * @param alto
      */
-    Tablero(int ancho, int alto, Controlador unControlador) {
+    Tablero(int ancho, int alto,VentanaConCanvas vcc) {
         this.ancho = ancho;
         this.alto = alto;
         if (ancho > alto) {
@@ -68,7 +68,7 @@ public class Tablero {
             }
         }
         tamanoPalabraMinimo = 4;
-        this.miControlador = unControlador;
+        this.vcc=vcc;
     }
 
     /**
@@ -136,7 +136,7 @@ public class Tablero {
         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
-            listaCandidatos = miControlador.buscarPalabras(patron);
+            listaCandidatos = vcc.buscarPalabras(patron);
 
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
@@ -164,7 +164,7 @@ public class Tablero {
         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
-            listaCandidatos = miControlador.buscarPalabras(patron);
+            listaCandidatos = vcc.buscarPalabras(patron);
 
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
@@ -192,7 +192,7 @@ public class Tablero {
         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
-            listaCandidatos = miControlador.buscarPalabras(patron);
+            listaCandidatos = vcc.buscarPalabras(patron);
 
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
@@ -221,7 +221,7 @@ public class Tablero {
         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
-            listaCandidatos = miControlador.buscarPalabras(patron);
+            listaCandidatos = vcc.buscarPalabras(patron);
 
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
