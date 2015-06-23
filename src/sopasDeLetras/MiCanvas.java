@@ -27,18 +27,18 @@ import javax.imageio.ImageIO;
 public class MiCanvas extends Canvas {
 
     private int xRaton;
-
     private int yRaton;
+    private int xElegido;
+    private int yElegido;
     private String paraPoner;
     private String paraMostrar;
-    
+    private boolean elegido;
     private int tamanoHorizontal;
     private int tamanoVertical;
     private VentanaConCanvas vcc;
     private ArrayList<Image> todasLasImagenesAzules;
     private ArrayList<Image> todasLasImagenesRosas;
     private Image fondoSeleccion;
-    
 
     MiCanvas(VentanaConCanvas vcc) {
         this.setBackground(Color.CYAN);
@@ -68,12 +68,14 @@ public class MiCanvas extends Canvas {
         paraPoner = cadenaAleatoria.toString();
         paraMostrar = cadenaParaMostrar.toString();
         //fin creacion de tablero
+        elegido = false;
         System.out.println(paraPoner);
     }
 
-     public void update(Graphics g) {
+    public void update(Graphics g) {
         paint(g);
-     }
+    }
+
     private Image cargarImagen(String archivo) {
         try {
             Image img1 = ImageIO.read(getClass().getClassLoader().getResource(archivo));
@@ -99,6 +101,16 @@ public class MiCanvas extends Canvas {
         this.yRaton = yRaton;
     }
 
+    public void setElegido() {
+        if (!elegido) {
+            xElegido = (xRaton / 50) * 50;
+            yElegido = (yRaton / 50) * 50;
+            elegido = true;
+        } else {
+            elegido = false;
+        }
+    }
+
     private void cargaTodasLasImagenes() {
         String rutaImagen;
         for (int i = 97; i <= 122; i++) {
@@ -115,9 +127,9 @@ public class MiCanvas extends Canvas {
         todasLasImagenesAzules.add(cargarImagen(rutaImagen));
         rutaImagen = "recursos/" + '1' + "rosa.png";
         System.out.println(rutaImagen);
-           todasLasImagenesRosas.add(cargarImagen(rutaImagen));
-           fondoSeleccion=cargarImagen("recursos/fondoseleccion.png");
-        
+        todasLasImagenesRosas.add(cargarImagen(rutaImagen));
+        fondoSeleccion = cargarImagen("recursos/fondoseleccion.png");
+
     }
 
     @Override
@@ -143,8 +155,16 @@ public class MiCanvas extends Canvas {
                 imagen.getGraphics().drawImage(miImagen, j * 50, i * 50, null);
             }
         }
+        if (elegido) {
+            miImagen = fondoSeleccion;
+            imagen.getGraphics().drawImage(miImagen, xElegido, yElegido, null);
+            System.out.println(elegido);
+        } else {
+            g.clearRect(xElegido, yElegido, 50, 50);
+        }
         // Se "pega" la imagen sobre el componente
         g.drawImage(imagen, 0, 0, this);
+
         vcc.setLabels(xRaton, yRaton);
     }
 }

@@ -39,8 +39,8 @@ public class VentanaConCanvas extends JFrame{
         unCanvas=new MiCanvas(this);
         unCanvas.setBounds(200, 0, 500, 500);
         add(unCanvas);
-        unCanvas.addMouseMotionListener(new ProcRaton());
-       // unCanvas.addMouseListener(new ProcRaton());   
+        //unCanvas.addMouseMotionListener(new ProcRaton());
+       unCanvas.addMouseListener(new ProcRaton());   
     }
     public void setTablero(String paraPoner,int tamanoHorizontal,int tamanoVertical){
         unCanvas.setTablero(paraPoner,tamanoHorizontal,tamanoVertical);

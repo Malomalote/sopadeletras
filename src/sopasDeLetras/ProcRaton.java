@@ -13,15 +13,16 @@ import java.awt.event.MouseEvent;
  * @author antoniogarcia
  */
 public class ProcRaton extends MouseAdapter{
-   /* public void mousePressed(MouseEvent evt){
-        ((MiCanvas) evt.getComponent()).xRaton=evt.getX();
-        ((MiCanvas) evt.getComponent()).yRaton=evt.getY();
+    public void mousePressed(MouseEvent evt){
+        ((MiCanvas) evt.getComponent()).setxRaton(evt.getX());
+        ((MiCanvas) evt.getComponent()).setyRaton(evt.getY());
+        ((MiCanvas) evt.getComponent()).setElegido();
         evt.getComponent().repaint();
     }
- */   public void mouseMoved(MouseEvent evt){
+ /*  public void mouseMoved(MouseEvent evt){
         ((MiCanvas) evt.getComponent()).setxRaton(evt.getX());
         ((MiCanvas) evt.getComponent()).setyRaton(evt.getY());
         evt.getComponent().repaint();
-    }
+    }*/
   
 }
