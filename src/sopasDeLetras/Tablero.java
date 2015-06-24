@@ -15,6 +15,7 @@ public class Tablero {
 
     private int ancho;
     private int alto;
+
     private int palabraMasLarga;
     private int palabraMasCorta;
     private int tamanoPalabraMinimo;
@@ -22,6 +23,16 @@ public class Tablero {
     ArrayList<String> palabrasIncluidas;
     private int numeroDePalabras;
     private VentanaConCanvas vcc;
+
+    public void setAncho(int ancho) {
+        this.ancho = ancho;
+        nuevoContenido();
+    }
+
+    public void setAlto(int alto) {
+        this.alto = alto;
+        nuevoContenido();
+    }
 
     /**
      * Establece el número de palabras que compondrá la sopa de letras una vez
@@ -51,7 +62,7 @@ public class Tablero {
      * @param ancho
      * @param alto
      */
-    Tablero(int ancho, int alto,VentanaConCanvas vcc) {
+    Tablero(int ancho, int alto, VentanaConCanvas vcc) {
         this.ancho = ancho;
         this.alto = alto;
         if (ancho > alto) {
@@ -61,14 +72,18 @@ public class Tablero {
             this.palabraMasLarga = alto;
             this.palabraMasCorta = ancho;
         }
+        nuevoContenido();
+        tamanoPalabraMinimo = 4;
+        this.vcc = vcc;
+    }
+
+    private void nuevoContenido() {
         contenido = new char[alto][ancho];
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
                 contenido[i][j] = '.';
             }
         }
-        tamanoPalabraMinimo = 4;
-        this.vcc=vcc;
     }
 
     /**
@@ -86,6 +101,25 @@ public class Tablero {
             cadena.append('\n');
         }
         return cadena.toString();
+    }
+
+    public String getTablero() {
+        StringBuilder paraDevolver = new StringBuilder();
+        for (int i = 0; i < alto; i++) {
+            for (int j = 0; j < ancho; j++) {
+                if (contenido[j][i] == '.') {
+                    int numero = Utilidades.dameUnNumeroEntre(0, 26);
+                    if (numero == 26) {
+                        paraDevolver.append('ñ');
+                    } else {
+                        paraDevolver.append((char) (numero + 97));
+                    }
+                } else {
+                    paraDevolver.append(contenido[j][i]);
+                }
+            }
+        }
+        return paraDevolver.toString();
     }
 
     public String getListaDePalabras() {
@@ -131,9 +165,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - tamanoPalabra);
         int y = Utilidades.dameUnNumeroEntre(tamanoPalabra - 1, alto - 1);
         String patron = getTramo(x, y, x + tamanoPalabra - 1, y - tamanoPalabra + 1);
-     /*   System.out.println("intenta noreste");
-        System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
+        /*   System.out.println("intenta noreste");
+         System.out.println("xinicio-> " + x + " yinicio-> " + y);
+         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = vcc.buscarPalabras(patron);
@@ -159,9 +193,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - tamanoPalabra);
         int y = Utilidades.dameUnNumeroEntre(0, alto - 1);
         String patron = getTramo(x, y, x + tamanoPalabra - 1, y);
-      /*  System.out.println("intenta este");
-        System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
+        /*  System.out.println("intenta este");
+         System.out.println("xinicio-> " + x + " yinicio-> " + y);
+         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = vcc.buscarPalabras(patron);
@@ -187,9 +221,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - tamanoPalabra);
         int y = Utilidades.dameUnNumeroEntre(0, alto - tamanoPalabra);
         String patron = getTramo(x, y, x + tamanoPalabra - 1, y + tamanoPalabra - 1);
-     /*   System.out.println("intenta sureste");
-        System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
+        /*   System.out.println("intenta sureste");
+         System.out.println("xinicio-> " + x + " yinicio-> " + y);
+         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = vcc.buscarPalabras(patron);
@@ -197,7 +231,7 @@ public class Tablero {
             if (!listaCandidatos.isEmpty()) {
                 String nuevaPalabra;
                 nuevaPalabra = listaCandidatos.get(Utilidades.dameUnNumeroEntre(0, listaCandidatos.size() - 1));
-              //  System.out.println(nuevaPalabra);
+                //  System.out.println(nuevaPalabra);
                 if (!palabrasIncluidas.contains(nuevaPalabra)) {
                     palabrasIncluidas.add(nuevaPalabra);
                     setTramoSureste(x, y, nuevaPalabra);
@@ -216,9 +250,9 @@ public class Tablero {
         int x = Utilidades.dameUnNumeroEntre(0, ancho - 1);
         int y = Utilidades.dameUnNumeroEntre(0, alto - tamanoPalabra);
         String patron = getTramo(x, y, x, y + tamanoPalabra - 1);
-      /*  System.out.println("intenta sur");
-        System.out.println("xinicio-> " + x + " yinicio-> " + y);
-        System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
+        /*  System.out.println("intenta sur");
+         System.out.println("xinicio-> " + x + " yinicio-> " + y);
+         System.out.println("xfin-> " + (x + tamanoPalabra - 1) + " yfin-> " + (y + tamanoPalabra - 1));*/
 
         if (patron != "-1") {
             listaCandidatos = vcc.buscarPalabras(patron);
