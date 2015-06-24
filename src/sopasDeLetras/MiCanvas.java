@@ -25,7 +25,7 @@ import javax.imageio.ImageIO;
  * @author antoniogarcia
  */
 public class MiCanvas extends Canvas {
-
+    
     private int xRaton;
     private int yRaton;
     private int xElegido;
@@ -38,81 +38,112 @@ public class MiCanvas extends Canvas {
     private VentanaConCanvas vcc;
     private ArrayList<Image> todasLasImagenesAzules;
     private ArrayList<Image> todasLasImagenesRosas;
+    private ArrayList<String> relacionPalabras;
     private Image fondoSeleccion;
-
+    private int tamanoLetra;
+    
     MiCanvas(VentanaConCanvas vcc) {
         this.setBackground(Color.CYAN);
         this.vcc = vcc;
         todasLasImagenesAzules = new ArrayList<>();
         todasLasImagenesRosas = new ArrayList<>();
-        cargaTodasLasImagenes();
         //creamos un primer tablero aleatorio para que nos muestre algo al empezar
         tamanoHorizontal = 10;
         tamanoVertical = 10;
         StringBuilder cadenaAleatoria = new StringBuilder();
-        StringBuilder cadenaParaMostrar = new StringBuilder();
         for (int i = 0; i < tamanoHorizontal; i++) {
             for (int j = 0; j < tamanoHorizontal; j++) {
-               int numero = Utilidades.dameUnNumeroEntre(0, 26);
+                int numero = Utilidades.dameUnNumeroEntre(0, 26);
                 if (numero == 26) {
                     cadenaAleatoria.append('ñ');
                 } else {
                     cadenaAleatoria.append((char) (numero + 97));
                 }
-                //aprovechamos para crear paraMostrar, que nos dirá en que color
-                //va la casilla
-                      
+            }
+        }
+        //cadenaParaMostrar.setCharAt(20, 'r');
+        paraPoner = cadenaAleatoria.toString();
+        setParaMostrar();
+        //fin creacion de tablero
+        elegido = false;
+        System.out.println("tamano Horizontal = " + tamanoHorizontal);
+        setTamanoLetra();
+        cargaTodasLasImagenes();
+    }
+
+    private void setTamanoLetra() {
+        int haCambiado = tamanoLetra;
+        if (tamanoHorizontal > tamanoVertical) {
+            tamanoLetra = 500 / tamanoHorizontal;
+        } else {
+            tamanoLetra = 500 / tamanoVertical;
+        }
+        if (tamanoLetra != haCambiado) {
+            System.out.println("dlasidflasdkf");
+            cargaTodasLasImagenes();
+        }
+    }
+
+    private void setParaMostrar() {
+        StringBuilder cadenaParaMostrar = new StringBuilder();
+        for (int i = 0; i < tamanoHorizontal; i++) {
+            for (int j = 0; j < tamanoHorizontal; j++) {
                 cadenaParaMostrar.append('a');
             }
         }
-        cadenaParaMostrar.setCharAt(20, 'r');
-        paraPoner = cadenaAleatoria.toString();
         paraMostrar = cadenaParaMostrar.toString();
-        //fin creacion de tablero
-        elegido = false;
     }
 
     public void update(Graphics g) {
         paint(g);
     }
-
+    
     private Image cargarImagen(String archivo) {
         try {
+            setTamanoLetra();
             Image img1 = ImageIO.read(getClass().getClassLoader().getResource(archivo));
-            img1 = img1.getScaledInstance(50, 50, 0);
+            img1 = img1.getScaledInstance(tamanoLetra, tamanoLetra, 0);
             return img1;
         } catch (IOException ex) {
             Logger.getLogger(MiCanvas.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-
-    public void setTablero(String paraPoner, int tamanoHorizontal, int tamanoVertical) {
-        this.paraPoner = paraPoner.toLowerCase();
+    
+    public void setTablero(String paraPoner, ArrayList<String> relacionPalabras, int tamanoHorizontal, int tamanoVertical) {
+        
+        this.relacionPalabras = relacionPalabras;
         this.tamanoHorizontal = tamanoHorizontal;
         this.tamanoVertical = tamanoVertical;
+        setTamanoLetra();
+        setParaMostrar();
+        this.paraPoner = paraPoner.toLowerCase();
+        this.repaint();
     }
-
+    
     public void setxRaton(int xRaton) {
         this.xRaton = xRaton;
     }
-
+    
     public void setyRaton(int yRaton) {
         this.yRaton = yRaton;
     }
-
+    
     public void setElegido() {
         if (!elegido) {
-            xElegido = (xRaton / 50) * 50;
-            yElegido = (yRaton / 50) * 50;
+            xElegido = (xRaton / tamanoLetra) * tamanoLetra;
+            yElegido = (yRaton / tamanoLetra) * tamanoLetra;
             elegido = true;
         } else {
             elegido = false;
         }
     }
-
+    
     private void cargaTodasLasImagenes() {
         String rutaImagen;
+        setTamanoLetra();
+        todasLasImagenesAzules.clear();
+        todasLasImagenesRosas.clear();
         for (int i = 97; i <= 122; i++) {
             rutaImagen = "recursos/" + (char) i + "azul.png";
             todasLasImagenesAzules.add(cargarImagen(rutaImagen));
@@ -124,19 +155,19 @@ public class MiCanvas extends Canvas {
         rutaImagen = "recursos/" + '1' + "rosa.png";
         todasLasImagenesRosas.add(cargarImagen(rutaImagen));
         fondoSeleccion = cargarImagen("recursos/fondoseleccion.png");
-
+        
     }
-
+    
     @Override
     public void paint(Graphics g) {
         // Se crea una imagen del mismo tamaño que el Canvas
         BufferedImage imagen = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-
+        g.clearRect(0, 0, 500, 500);
         int caracter;
         Image miImagen;
         for (int i = 0; i < tamanoHorizontal; i++) {
             for (int j = 0; j < tamanoVertical; j++) {
-
+                
                 caracter = (paraPoner.codePointAt((i * tamanoVertical) + j)) - 97;
                 if (caracter > 26) {
                     caracter = 26;
@@ -146,18 +177,19 @@ public class MiCanvas extends Canvas {
                 } else {
                     miImagen = todasLasImagenesRosas.get(caracter);
                 }
-
-                imagen.getGraphics().drawImage(miImagen, j * 50, i * 50, null);
+                
+                imagen.getGraphics().drawImage(miImagen, j * tamanoLetra, i * tamanoLetra, null);
             }
         }
         if (elegido) {
             miImagen = fondoSeleccion;
             imagen.getGraphics().drawImage(miImagen, xElegido, yElegido, null);
         } else {
-            g.clearRect(xElegido, yElegido, 50, 50);
+            g.clearRect(xElegido, yElegido, tamanoLetra, tamanoLetra);
         }
         // Se "pega" la imagen sobre el componente
         g.drawImage(imagen, 0, 0, this);
-
+        
     }
+    
 }

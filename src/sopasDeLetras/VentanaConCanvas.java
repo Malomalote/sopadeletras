@@ -32,7 +32,7 @@ public class VentanaConCanvas extends JFrame {
     private String temaElegido;
     private int numPalabras;
 
-    MiCanvas unCanvas;
+    MiCanvas unCanvas=null;
     Tablero miTablero;
     Diccionario miDiccionario;
 
@@ -54,7 +54,6 @@ public class VentanaConCanvas extends JFrame {
         addTamanoControl();
         addNumPalabrasControl();
         addGenerarControl();
-
         unCanvas = new MiCanvas(this);
         unCanvas.setBounds(500, 0, 500, 500);
         add(unCanvas);
@@ -62,9 +61,6 @@ public class VentanaConCanvas extends JFrame {
         unCanvas.addMouseListener(new ProcRaton());
     }
 
-    public void setTablero(String paraPoner, int tamanoHorizontal, int tamanoVertical) {
-        unCanvas.setTablero(paraPoner, tamanoHorizontal, tamanoVertical);
-    }
 
     public void setArchivo(String archivo) {
         miDiccionario.setArchivo(new File(archivo));
@@ -165,14 +161,11 @@ public class VentanaConCanvas extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO GENERAR SOPA DE LETRAS Y MOSTRARLA
-            
-                System.out.println("boton pulsado");
+                
                 miTablero.setAncho(tamanoX);
                 miTablero.setAlto(tamanoY);
                 miTablero.setNumeroDePalabras(numPalabras);
-                System.out.println(miTablero.toString());
-                System.out.println(miTablero.getTablero());
+                unCanvas.setTablero(miTablero.getTablero(), miTablero.getListaDePalabras(),tamanoX, tamanoX);
             }
 
         });

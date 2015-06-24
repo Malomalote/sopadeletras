@@ -24,6 +24,8 @@ public class Diccionario {
 
     private File archivo;
     private TreeMap<String, TreeMap<Integer, ArrayList<String>>> listadoCompleto = new TreeMap<>();
+    //TODO BORRAR SOLO PARA PRUEBAS
+    private ArrayList<String> categorias = new ArrayList<>();
 
     /**
      * Metodo para establecer el archivo que contiene las palabras de mi
@@ -101,8 +103,11 @@ public class Diccionario {
     private void incluirPalabraEnDiccionario(String categoria, String palabraParaIncluir) {
 
         int tamano = palabraParaIncluir.length();
-       
+
         if (!listadoCompleto.containsKey(categoria)) {
+            //TODO BORRAR, SOLO PARA PRUEBAS
+            categorias.add(categoria);
+            ////////////////
             listadoCompleto.put(categoria, new TreeMap<Integer, ArrayList<String>>());
             listadoCompleto.get(categoria).put(tamano, new ArrayList<String>());
             listadoCompleto.get(categoria).get(tamano).add(palabraParaIncluir);
@@ -129,8 +134,6 @@ public class Diccionario {
         ArrayList<String> paraDevolver = new ArrayList<>();
         int tamano = patron.length();
         for (String cate : listadoCompleto.keySet()) {
-            /*  System.out.println(patron);
-             System.out.println(cate);*/
             if (listadoCompleto.get(cate).containsKey(tamano)) {
                 for (String pala : listadoCompleto.get(cate).get(tamano)) {
                     Pattern p = Pattern.compile(patron);
@@ -154,12 +157,15 @@ public class Diccionario {
     public ArrayList<String> getCoincidencias(String categoria, String patron) {
         ArrayList<String> paraDevolver = new ArrayList<>();
         int tamano = patron.length();
-        for (String pala : listadoCompleto.get(categoria).get(tamano)) {
-            Pattern p = Pattern.compile(patron);
-            Matcher m = p.matcher(pala);
-            if (m.find()) {
-                paraDevolver.add(pala);
+        if (listadoCompleto.get(categoria.toLowerCase()).containsKey(tamano)) {
+            for (String pala : listadoCompleto.get(categoria.toLowerCase()).get(tamano)) {
+                Pattern p = Pattern.compile(patron);
+                Matcher m = p.matcher(pala);
+                if (m.find()) {
+                    paraDevolver.add(pala);
+                }
             }
+
         }
         return paraDevolver;
     }

@@ -122,14 +122,8 @@ public class Tablero {
         return paraDevolver.toString();
     }
 
-    public String getListaDePalabras() {
-        StringBuilder cadena = new StringBuilder();
-
-        for (String p : palabrasIncluidas) {
-            cadena.append(p).append('\n');
-        }
-        cadena.append(palabrasIncluidas.size());
-        return cadena.toString();
+    public ArrayList<String> getListaDePalabras() {
+        return palabrasIncluidas;
     }
 
     private boolean incluirPalabras() {
