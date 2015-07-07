@@ -165,7 +165,6 @@ public class Diccionario {
                     paraDevolver.add(pala);
                 }
             }
-
         }
         return paraDevolver;
     }
